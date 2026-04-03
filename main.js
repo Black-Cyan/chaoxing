@@ -1,10 +1,12 @@
 // ==UserScript==
 // @name         超星学习通AI自动答题
 // @namespace    http://tampermonkey.net/
-// @icon          http://pan-yz.chaoxing.com/favicon.ico
-// @version      1.0.1
-// @description  在学习通页面注入悬浮窗，通过配置OpenAI格式的API实现对单选、多选、填空、简答等题型的自动识别与作答。
+// @icon         http://pan-yz.chaoxing.com/favicon.ico
+// @version      1.0.2
+// @description  在学习通页面注入悬浮窗，通过配置OpenAI格式的API实现对单选、多选、填空、简答等题型的自动识别与作答。注：此脚本遵循 APL 2.0 开源协议，完全免费
 // @author       Black Cyan
+// @license      APL 2.0
+// @homepageURL  https://github.com/Black-Cyan/chaoxing
 // @match        *://*.chaoxing.com/*
 // @match        *://*.edu.cn/*
 // @grant        GM_getValue

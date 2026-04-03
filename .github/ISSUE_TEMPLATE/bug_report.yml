@@ -1,0 +1,55 @@
+name: Bug Report
+description: 提交 Bug 以帮助我们改进
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢您抽出宝贵时间报告 Bug！
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: 确认提示
+      description: 提交前请确认以下各项
+      options:
+        - label: 我已搜索现有的 issues，未发现类似的 bug 报告。
+          required: true
+        - label: 我确认这不是一个重复的 issue。
+          required: true
+  - type: input
+    id: version
+    attributes:
+      label: 使用的版本 / Version
+      description: 请填写您遇到该 Bug 时的版本（例如：v1.0.1）。
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug 描述
+      description: 清楚简洁地描述这个 Bug 是什么。
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: 复现步骤
+      description: 请提供复现该 Bug 的详细步骤。
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 预期行为
+      description: 清楚简洁地描述你期望发生的事情。
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: 日志输出
+      description: 请粘贴任何相关的错误日志或控制台输出（如果太长，请使用代码块或 Gist）。
+      render: shell
+    validations:
+      required: false

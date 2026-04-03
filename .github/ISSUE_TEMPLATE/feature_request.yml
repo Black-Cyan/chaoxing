@@ -1,0 +1,31 @@
+name: Feature Request
+description: 提出新功能建议
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢您提出新功能建议！
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: 确认提示
+      description: 提交前请确认以下各项
+      options:
+        - label: 我已搜索现有的 issues，未发现类似的功能请求。
+          required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: 功能描述
+      description: 清楚简洁地描述您想要的功能。
+    validations:
+      required: true
+  - type: textarea
+    id: reason
+    attributes:
+      label: 为什么需要这个功能？
+      description: 这个功能解决了什么问题？或者能带来什么好处？
+    validations:
+      required: true
