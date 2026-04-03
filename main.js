@@ -1,7 +1,8 @@
 // ==UserScript==
 // @name         超星学习通AI自动答题
 // @namespace    http://tampermonkey.net/
-// @version      1.0.0
+// @icon          http://pan-yz.chaoxing.com/favicon.ico
+// @version      1.0.1
 // @description  在学习通页面注入悬浮窗，通过配置OpenAI格式的API实现对单选、多选、填空、简答等题型的自动识别与作答。
 // @author       Black Cyan
 // @match        *://*.chaoxing.com/*
@@ -477,21 +478,33 @@
                 });
             }
         }
-        else if (qType.includes('简答') || qType.includes('名词解释')) {
-            // 这通常是ueditor或者原生textarea
-            const textarea = qNode.querySelector('textarea');
-            if (textarea) {
-                textarea.value = aiAnswer;
-                textarea.dispatchEvent(new Event('input', { bubbles: true }));
-            } else {
-                // 如果是iframe UEditor结构，需要跨iframe操作
+        else if (qType.includes('简答') || qType.includes('名词解释') || qType.includes('论述')) {
+            // 一般会有个富文本编辑器iframe，同时带有一个被隐藏的textarea用于最终提交
+            try {
+                // 尝试查找和修改UEditor iframe的内容
                 const iframe = qNode.querySelector('iframe');
                 if (iframe && iframe.contentWindow && iframe.contentWindow.document) {
-                    const body = iframe.contentWindow.document.querySelector('body');
+                    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                    const body = iframeDoc.querySelector('body');
                     if (body) {
-                        body.innerText = aiAnswer;
+                        body.innerHTML = '<p>' + aiAnswer + '</p>';
+                        body.dispatchEvent(new Event('blur', { bubbles: true })); // 触发某些绑定的保存事件
+                        body.dispatchEvent(new Event('keyup', { bubbles: true }));
                     }
                 }
+                
+                // 尝试向同节点的 textarea 同步
+                const textarea = qNode.querySelector('textarea');
+                if (textarea) {
+                    textarea.value = aiAnswer;
+                    textarea.innerHTML = aiAnswer;
+                    // React/Vue或内部原生事件模拟
+                    textarea.dispatchEvent(new Event('input', { bubbles: true }));
+                    textarea.dispatchEvent(new Event('change', { bubbles: true }));
+                    textarea.dispatchEvent(new Event('blur', { bubbles: true }));
+                }
+            } catch (err) {
+                console.error('简答题填入异常:', err);
             }
         }
     }
